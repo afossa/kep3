@@ -12,8 +12,6 @@
       "installDir": "$env{CONDA_PREFIX}",
       "cacheVariables": {
         "CMAKE_PREFIX_PATH": "$env{CONDA_PREFIX}",
-        "CMAKE_C_COMPILER": "clang",
-        "CMAKE_CXX_COMPILER": "clang++",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "kep3_BUILD_TESTS": "ON",
         "kep3_BUILD_PYTHON_BINDINGS": "ON"
@@ -21,18 +19,42 @@
     },
     {
       "name": "debug",
-      "displayName": "macOS Debug",
+      "displayName": "Debug (Clang)",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "$env{CONDA_PREFIX}/bin/clang",
+        "CMAKE_CXX_COMPILER": "$env{CONDA_PREFIX}/bin/clang++"
       }
     },
     {
       "name": "release",
-      "displayName": "macOS Release",
+      "displayName": "Release (Clang)",
       "inherits": "base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_COMPILER": "$env{CONDA_PREFIX}/bin/clang",
+        "CMAKE_CXX_COMPILER": "$env{CONDA_PREFIX}/bin/clang++"
+      }
+    },
+    {
+      "name": "debug-gcc",
+      "displayName": "Debug (GCC)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "$env{CONDA_PREFIX}/bin/gcc",
+        "CMAKE_CXX_COMPILER": "$env{CONDA_PREFIX}/bin/g++"
+      }
+    },
+    {
+      "name": "release-gcc",
+      "displayName": "Release (GCC)",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_COMPILER": "$env{CONDA_PREFIX}/bin/gcc",
+        "CMAKE_CXX_COMPILER": "$env{CONDA_PREFIX}/bin/g++"
       }
     }
   ],
@@ -83,20 +105,74 @@
   "workflowPresets": [
     {
       "name": "debug",
-      "displayName": "Full Debug Workflow",
+      "displayName": "Full Debug Workflow (Clang)",
       "steps": [
-        { "type": "configure", "name": "debug" },
-        { "type": "build", "name": "debug" },
-        { "type": "test", "name": "debug" }
+        {
+          "type": "configure",
+          "name": "debug"
+        },
+        {
+          "type": "build",
+          "name": "debug"
+        },
+        {
+          "type": "test",
+          "name": "debug"
+        }
       ]
     },
     {
       "name": "release",
-      "displayName": "Full Release Workflow",
+      "displayName": "Full Release Workflow (Clang)",
       "steps": [
-        { "type": "configure", "name": "release" },
-        { "type": "build", "name": "release" },
-        { "type": "test", "name": "release" }
+        {
+          "type": "configure",
+          "name": "release"
+        },
+        {
+          "type": "build",
+          "name": "release"
+        },
+        {
+          "type": "test",
+          "name": "release"
+        }
+      ]
+    },
+    {
+      "name": "debug-gcc",
+      "displayName": "Full Debug Workflow (GCC)",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "debug-gcc"
+        },
+        {
+          "type": "build",
+          "name": "debug"
+        },
+        {
+          "type": "test",
+          "name": "debug"
+        }
+      ]
+    },
+    {
+      "name": "release-gcc",
+      "displayName": "Full Release Workflow (GCC)",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "release-gcc"
+        },
+        {
+          "type": "build",
+          "name": "release"
+        },
+        {
+          "type": "test",
+          "name": "release"
+        }
       ]
     }
   ]

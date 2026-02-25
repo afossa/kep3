@@ -1,7 +1,7 @@
 [workspace]
 channels = ["conda-forge"]
 name = "kep3_devel"
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "linux-aarch64"]
 
 [tasks]
 
@@ -23,10 +23,10 @@ pybind11 = ">=3.0.2,<4"
 sgp4 = ">=2.25,<3"
 spiceypy = ">=8.0.2,<9"
 matplotlib = ">=3.10.8,<4"
-pygmo_plugins_nonfree = ">=0.26,<0.27"
 scipy = ">=1.17.1,<2"
 numpy = ">=2.4.2,<3"
 sphinx = "<9"
 sphinx-book-theme = ">=1.1.4,<2"
 sphinxcontrib-bibtex = ">=2.6.5,<3"
 myst-nb = ">=1.3.0,<2"
+pygmo = ">=2.19.7,<3"
