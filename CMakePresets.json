@@ -61,15 +61,29 @@
   "buildPresets": [
     {
       "name": "debug",
-      "displayName": "Build Debug",
+      "displayName": "Build Debug (Clang)",
       "configurePreset": "debug",
       "configuration": "Debug",
       "jobs": 0
     },
     {
       "name": "release",
-      "displayName": "Build Release",
+      "displayName": "Build Release (Clang)",
       "configurePreset": "release",
+      "configuration": "Release",
+      "jobs": 0
+    },
+    {
+      "name": "debug-gcc",
+      "displayName": "Build Debug (GCC)",
+      "configurePreset": "debug-gcc",
+      "configuration": "Debug",
+      "jobs": 0
+    },
+    {
+      "name": "release-gcc",
+      "displayName": "Build Release (GCC)",
+      "configurePreset": "release-gcc",
       "configuration": "Release",
       "jobs": 0
     }
@@ -77,7 +91,7 @@
   "testPresets": [
     {
       "name": "debug",
-      "displayName": "Test Debug",
+      "displayName": "Test Debug (Clang)",
       "configurePreset": "debug",
       "output": {
         "outputOnFailure": true
@@ -90,8 +104,34 @@
     },
     {
       "name": "release",
-      "displayName": "Test Release",
+      "displayName": "Test Release (Clang)",
       "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false,
+        "jobs": 0
+      }
+    },
+    {
+      "name": "debug-gcc",
+      "displayName": "Test Debug (GCC)",
+      "configurePreset": "debug-gcc",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false,
+        "jobs": 0
+      }
+    },
+    {
+      "name": "release-gcc",
+      "displayName": "Test Release (GCC)",
+      "configurePreset": "release-gcc",
       "output": {
         "outputOnFailure": true
       },
@@ -149,11 +189,11 @@
         },
         {
           "type": "build",
-          "name": "debug"
+          "name": "debug-gcc"
         },
         {
           "type": "test",
-          "name": "debug"
+          "name": "debug-gcc"
         }
       ]
     },
@@ -167,11 +207,11 @@
         },
         {
           "type": "build",
-          "name": "release"
+          "name": "release-gcc"
         },
         {
           "type": "test",
-          "name": "release"
+          "name": "release-gcc"
         }
       ]
     }
