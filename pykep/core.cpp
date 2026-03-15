@@ -561,9 +561,8 @@ PYBIND11_MODULE(core, m) // NOLINT
     // Exposing propagators
     m.def(
         "propagate_lagrangian",
-        [](const std::array<std::array<double, 3>, 2> &pos_vel, double dt, double mu, bool request_stm) {
-            auto pl_retval = kep3::propagate_lagrangian(pos_vel, dt, mu, request_stm);
-            py::tuple retval_py;
+        [](const std::array<std::array<double, 3>, 2> &pos_vel, double dt, double mu, bool request_stm) -> py::object {
+        auto pl_retval = kep3::propagate_lagrangian(pos_vel, dt, mu, request_stm);
             if (pl_retval.second) {
                 // The stm was requested lets transfer ownership to python
                 const std::array<double, 36> &stm = pl_retval.second.value();
@@ -585,18 +584,17 @@ PYBIND11_MODULE(core, m) // NOLINT
                 auto computed_stm = py::array_t<double>(
                     py::array::ShapeContainer{static_cast<py::ssize_t>(6), static_cast<py::ssize_t>(6)}, // shape
                     ptr->data(), std::move(vec_caps));
-                retval_py = py::make_tuple(py::make_tuple(pl_retval.first[0], pl_retval.first[1]), computed_stm);
+                return py::make_tuple(py::make_tuple(pl_retval.first[0], pl_retval.first[1]), computed_stm);
             } else {
-                retval_py = py::make_tuple(pl_retval.first[0], pl_retval.first[1]);
+                return py::make_tuple(pl_retval.first[0], pl_retval.first[1]);
             }
-            return retval_py;
         },
         py::arg("rv") = std::array<std::array<double, 3>, 2>{{{1, 0, 0}, {0, 1, 0}}}, py::arg("tof") = kep3::pi / 2,
         py::arg("mu") = 1, py::arg("stm") = false, pykep::propagate_lagrangian_docstring().c_str());
 
     m.def("propagate_lagrangian_grid", [](const std::array<std::array<double, 3>, 2> &pos_vel, const std::vector<double> &time_grid, double mu,
         bool request_stm){
-            auto retval_c = kep3::propagate_lagrangian_grid(pos_vel, time_grid, mu, request_stm);
+            auto retval_c = kep3::propagate_lagrangian_grid(pos_vel, time_grid, mu, request_stm);      
             std::vector<py::tuple> retval_py{};
             retval_py.reserve(time_grid.size());
             for (decltype(time_grid.size()) i = 0u; i < time_grid.size(); ++i) {
@@ -889,7 +887,7 @@ PYBIND11_MODULE(core, m) // NOLINT
 
 #undef PYKEP3_EXPOSE_LEG_SF_ATTRIBUTES
 
-    // using tas_type = std::pair<const heyoka::taylor_adaptive<double> &, const heyoka::taylor_adaptive<double> &>;
+    using tas_type = std::pair<const heyoka::taylor_adaptive<double> &, const heyoka::taylor_adaptive<double> &>;
 
     sims_flanagan_alpha.def("compute_mismatch_constraints",
                             &kep3::leg::sims_flanagan_alpha::compute_mismatch_constraints,
