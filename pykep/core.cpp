@@ -887,7 +887,7 @@ PYBIND11_MODULE(core, m) // NOLINT
 
 #undef PYKEP3_EXPOSE_LEG_SF_ATTRIBUTES
 
-    using tas_type = std::pair<const heyoka::taylor_adaptive<double> &, const heyoka::taylor_adaptive<double> &>;
+    // using tas_type = std::pair<const heyoka::taylor_adaptive<double> &, const heyoka::taylor_adaptive<double> &>;
 
     sims_flanagan_alpha.def("compute_mismatch_constraints",
                             &kep3::leg::sims_flanagan_alpha::compute_mismatch_constraints,
